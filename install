@@ -28,7 +28,12 @@ symlink() {
   ln -nsf "$source" "$target"
 }
 
-
+install_software() {
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
+  wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+  chmod 744 Miniconda2-latest-Linux-x86_64.sh
+  ./Miniconda2-latest-Linux-x86_64.sh
+}
 # does ~/.dotfiles exist? If not, this must be a first install.
 # skip all git actions if '-n' argument is specified
 if [ "$RUN_GIT" != 'no' ]; then
@@ -48,7 +53,7 @@ else
 fi
 
 # symlink any files matching ~/.dotfiles/_<NAME> to ~/.<NAME>
-for i in _*; do 
+for i in _*; do
     source="${PWD}/$i"
     target="${HOME}/${i/_/.}"
 
@@ -78,3 +83,4 @@ for i in _*; do
     fi
     symlink "$source" "$target"
 done
+ install_software

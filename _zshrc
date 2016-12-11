@@ -55,8 +55,8 @@ DEFAULT_USER=ian
 plugins=(git fedora docker)
 
 # POWERLEVEL9K THEME OPTIONS
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon anaconda context dir time vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status battery)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon anaconda time dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
 POWERLEVEL9K_PROMPT_ON_NEWLINE=true
 
 
@@ -99,3 +99,6 @@ fi
 if [ $commands[kubectl] ]; then
 	source <(kubectl completion zsh)
 fi
+
+export NVM_DIR="/home/ian/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
