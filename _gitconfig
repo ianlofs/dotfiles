@@ -1,6 +1,7 @@
 [user]
     name = Ian Lofgren
-    email = ian@pantheon.io
+    email = ian@ianlofgren.com
+	signingkey = 7BC2DE497C678022
 [color]
     # Use colors in Git commands that are capable of colored output when outputting to the terminal
     ui = auto
@@ -15,19 +16,19 @@
 [github]
     user = ianlofs
 [alias]
-  ll = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-  up = "!git remote update -p; git merge --ff-only @{u}"
-  co = checkout
-  ci = commit
-  s = status
-  ss = status -sb
-  p = push
-  lo = log --oneline
+    ll = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    up = "!git remote update -p; git merge --ff-only @{u}"
+    co = checkout
+    ci = commit
+    s = status
+    ss = status -sb
+    p = push
+    lo = log --oneline
 [push]
-	default = matching
+    default = matching
 [gpg]
-	program = gpg2
+    program = gpg2
 [commit]
-	gpgSign = true
+    gpgSign = true
 #[url "git@github.com:"]
 
