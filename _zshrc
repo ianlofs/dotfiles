@@ -7,8 +7,9 @@ export ZSH=/home/ian/.dotfiles/oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-
+ZSH_THEME="powerlevel9k/powerlevel9k"
+POWERLEVEL9K_MODE='awesome-fontconfig'
+DEFAULT_USER=ian
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -53,27 +54,34 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git fedora docker)
 
+# POWERLEVEL9K THEME OPTIONS
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon anaconda context dir time vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status battery)
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+
+
 source $ZSH/oh-my-zsh.sh
+
+
+# PATH additions
+export PATH="/home/ian/miniconda2/bin:$PATH"
+
 
 # env vars
 export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=True
 
-# User configuration
+
+# gpg-agent config
 GPG_TTY=/dev/pts/0; export GPG_TTY;
 if [ "0" -ne 8769 ]; then
   export SSH_AUTH_SOCK="/run/user/1000/gnupg/S.gpg-agent.ssh"
 fi
 gpg-connect-agent /bye
+
 
 # aliases
 alias zshconfig="mate ~/.zshrc"
 alias ohmyzsh="mate ~/.oh-my-zsh"
-
-GPG_TTY=/dev/pts/0; export GPG_TTY;
-if [ "0" -ne 8769 ]; then
-  export SSH_AUTH_SOCK="/run/user/1000/gnupg/S.gpg-agent.ssh"
-fi
-gpg-connect-agent /bye
 
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -81,11 +89,13 @@ if [ -f /home/ian/google-cloud-sdk/path.zsh.inc ]; then
   source '/home/ian/google-cloud-sdk/path.zsh.inc'
 fi
 
+
 # The next line enables shell command completion for gcloud.
 if [ -f /home/ian/google-cloud-sdk/completion.zsh.inc ]; then
   source '/home/ian/google-cloud-sdk/completion.zsh.inc'
 fi
 
+# Kubectl completions
 if [ $commands[kubectl] ]; then
 	source <(kubectl completion zsh)
 fi
