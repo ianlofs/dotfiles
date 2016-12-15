@@ -80,8 +80,10 @@ gpg-connect-agent /bye
 
 
 # aliases
-alias zshconfig="mate ~/.zshrc"
-alias ohmyzsh="mate ~/.oh-my-zsh"
+alias zshconfig="atom ~/.zshrc"
+alias ohmyzsh="atom ~/.oh-my-zsh"
+alias ku="kubectl"
+alias kug="kubectl get"
 
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -102,3 +104,5 @@ fi
 
 export NVM_DIR="/home/ian/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

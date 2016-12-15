@@ -33,6 +33,7 @@ install_software() {
   wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
   chmod 744 Miniconda2-latest-Linux-x86_64.sh
   ./Miniconda2-latest-Linux-x86_64.sh
+  curl -sSL https://get.rvm.io | bash
 }
 # does ~/.dotfiles exist? If not, this must be a first install.
 # skip all git actions if '-n' argument is specified
