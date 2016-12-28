@@ -1,0 +1,21 @@
+---
+# pants config can be placed in ~/.pants.yaml
+# or in the current  directory ./.pants.yaml
+# or specified with -f switch when invoking
+version: 0.0.1
+
+# set the default sandbox
+# sandbox names must be: 'a-z0-9' with dashes, between 11 and 55 chars long and prefixed with 'sandbox-'
+sandbox: sandbox-ian
+
+# list sandboxes you want to make pants aware of
+sandboxes:
+  - name: sandbox-ian
+    # only support 2 mutator types in config atm
+    # ext-services -  replace external-service lookup with the given host
+    # config-map - replace any keys value with the given value (this is across all config maps in the namespace)
+    mutators:
+      external-service:
+        # Point to your onebox hostname.  If you leave out, this
+        # will default to a shared onebox
+        ygg-api: ianob.onebox.panth.io

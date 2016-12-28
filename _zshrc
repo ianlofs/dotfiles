@@ -65,7 +65,9 @@ source $ZSH/oh-my-zsh.sh
 
 # PATH additions
 export PATH="/home/ian/miniconda2/bin:$PATH"
-
+export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:/home/ian/go/bin"
+export GOPATH="$HOME/go"
 
 # env vars
 export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=True
@@ -82,8 +84,10 @@ gpg-connect-agent /bye
 # aliases
 alias zshconfig="atom ~/.zshrc"
 alias ohmyzsh="atom ~/.oh-my-zsh"
-alias ku="kubectl"
-alias kug="kubectl get"
+alias kp="kubectl --namespace=production"
+alias kt="kubectl --namespace=testing"
+alias ks="kubectl --namespace=template-sandbox"
+
 
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -106,3 +110,5 @@ export NVM_DIR="/home/ian/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
