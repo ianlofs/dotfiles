@@ -68,6 +68,10 @@ export PATH="/home/ian/miniconda2/bin:$PATH"
 export PATH="$PATH:/usr/local/go/bin"
 export PATH="$PATH:/home/ian/go/bin"
 export GOPATH="$HOME/go"
+export JAVA_HOME="/usr/java/jdk1.8.0_112"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+
 
 # env vars
 export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=True
