@@ -1,7 +1,7 @@
 [user]
     name = Ian Lofgren
-    email = ian@ianlofgren.com
-	signingkey = 7BC2DE497C678022
+    email = ian@pantheon.io
+	signingkey = EEF7C26A758F4A5F
 [color]
     # Use colors in Git commands that are capable of colored output when outputting to the terminal
     ui = auto

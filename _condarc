@@ -1,3 +1,4 @@
 channels:
   - pantheon
   - defaults
+anaconda_upload: false
