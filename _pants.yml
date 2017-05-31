@@ -8,7 +8,7 @@ version: 0.0.1
 # sandbox names must be: 'a-z0-9' with dashes, between 11 and 55 chars long and prefixed with 'sandbox-'
 sandbox: sandbox-ian
 
-onebox: ianob.onebox.panth.io
+onebox: ian.onebox.panth.io
 
 # list sandboxes you want to make pants aware of
 sandboxes:

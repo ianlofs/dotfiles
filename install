@@ -3,7 +3,7 @@
 
 set -e
 
-GIT_URL="git@github.com:joemiller/dotfiles"
+GIT_URL="git@github.com:ianlofs/dotfiles"
 INSTALL_DIR="$HOME/.dotfiles"
 
 while getopts "nh" opt; do
@@ -28,13 +28,13 @@ symlink() {
   ln -nsf "$source" "$target"
 }
 
-#install_software() {
-#  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
-#  wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
-#  chmod 744 Miniconda2-latest-Linux-x86_64.sh
-#  ./Miniconda2-latest-Linux-x86_64.sh
-#  curl -sSL https://get.rvm.io | bash
-#}
+install_software() {
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
+  wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+  chmod 744 Miniconda2-latest-Linux-x86_64.sh
+  ./Miniconda2-latest-Linux-x86_64.sh
+  curl -sSL https://get.rvm.io | bash
+}
 # does ~/.dotfiles exist? If not, this must be a first install.
 # skip all git actions if '-n' argument is specified
 if [ "$RUN_GIT" != 'no' ]; then
