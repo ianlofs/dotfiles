@@ -1,7 +1,6 @@
 [user]
     name = Ian Lofgren
     email = ian@pantheon.io
-	signingkey = 512BEBFD28846919
 [color]
     # Use colors in Git commands that are capable of colored output when outputting to the terminal
     ui = auto
@@ -27,9 +26,5 @@
     pwl = push --force-with-lease
 [push]
     default = matching
-[gpg]
-    program = gpg2
-[commit]
-    gpgSign = true
 #[url "git@github.com:"]
 

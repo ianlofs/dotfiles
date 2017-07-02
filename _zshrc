@@ -1,8 +1,10 @@
+export TERM="xterm-256color"
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/home/ianlofs/.dotfiles/oh-my-zsh
+export ZSH=$HOME/.dotfiles/oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -52,7 +54,7 @@ DEFAULT_USER=ianlofs
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fedora docker)
+plugins=(git ubuntu docker)
 
 # POWERLEVEL9K THEME OPTIONS
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon anaconda time dir vcs)
@@ -65,9 +67,9 @@ source $ZSH/oh-my-zsh.sh
 
 # PATH additions
 # added by Miniconda2 4.3.11 installer
-export PATH="/home/ianlofs/miniconda2/bin:$PATH"
+export PATH="$HOME/miniconda2/bin:$PATH"
 # added by Miniconda3 4.3.14 installer
-export PATH="/home/ianlofs/miniconda3/bin:$PATH"
+export PATH="$HOME/miniconda3/bin:$PATH"
 export PATH="$PATH:/usr/local/go/bin"
 export PATH="$PATH:/home/ian/go/bin"
 export GOPATH="$HOME/go"

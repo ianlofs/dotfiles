@@ -30,9 +30,9 @@ symlink() {
 
 install_software() {
   curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash
-  wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
-  chmod 744 Miniconda2-latest-Linux-x86_64.sh
-  ./Miniconda2-latest-Linux-x86_64.sh
+  wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+  chmod 744 Miniconda3-latest-Linux-x86_64.sh
+  ./Miniconda3-latest-Linux-x86_64.sh
   curl -sSL https://get.rvm.io | bash
 }
 # does ~/.dotfiles exist? If not, this must be a first install.
@@ -41,7 +41,7 @@ if [ "$RUN_GIT" != 'no' ]; then
     if [ ! -e "$HOME/.dotfiles" ]; then
         git clone "$GIT_URL" "$INSTALL_DIR"
         cd "$INSTALL_DIR"
-    else
+    else{
         cd "$INSTALL_DIR"
         if ! git diff-index --quiet HEAD --; then
             echo 'WARNING: There are uncommitted local changes'
