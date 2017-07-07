@@ -20,4 +20,4 @@ sandboxes:
       external-service:
         # Point to your onebox hostname.  If you leave out, this
         # will default to a shared onebox
-        ygg-api: ianob.onebox.panth.io
+        ygg-api: ian.onebox.panth.io
