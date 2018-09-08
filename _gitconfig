@@ -23,5 +23,8 @@
     ss = status -sb
     p = push
     lo = log --oneline
+    pwl = push --force-with-lease
 [push]
     default = matching
+[core]
+	excludesfile = /home/ianlofgren/.gitignore
