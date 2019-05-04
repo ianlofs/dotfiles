@@ -1,3 +1,13 @@
+
+# editor stuff
 *.swp
-sandbox-ian
 .vscode
+
+# gpg stuff
+# only want to track certain files in 
+# the gnupg folder, others are secret
+_gnupg/*
+
+!_gnupg/gpg-agent
+!_gnupg/gpg.conf
+!_gnupg/scdaemon.con
