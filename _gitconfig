@@ -1,6 +1,7 @@
 [user]
     name = Ian Lofgren
     email = ian@ianlofgren.com
+    signingKey = 66A39B1D4CD79DE6
 [color]
     # Use colors in Git commands that are capable of colored output when outputting to the terminal
     ui = auto
@@ -24,7 +25,13 @@
     p = push
     lo = log --oneline
     pwl = push --force-with-lease
+    cam = commit --amend --no-edit
 [push]
     default = matching
 [core]
-	excludesfile = /home/ianlofgren/.gitignore
+	excludesfile = /Users/dator/.gitignore
+	editor = /usr/local/bin/nvim
+[commit]
+	gpgSign = true
+[init]
+	defaultBranch = main

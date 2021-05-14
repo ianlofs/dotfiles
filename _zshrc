@@ -1,79 +1,59 @@
-##------------Me managed executables-------##
-export PATH=$PATH:$HOME/.bin
-export PATH=$PATH:$HOME/.local/bin
-export PATH=$PATH:$HOME/.yarn/bin
+##------------ COMPILER FLAGS --------------##
+function setup_compiler_flags () {
+  local ldflags=(
+    "-L/usr/local/opt/readline/lib"
+    "-L/usr/local/opt/curl/lib"
+    "-L/usr/local/opt/libpq/lib"
+    "-L/usr/local/opt/openssl@1.1/lib"
+    "-L/usr/local/opt/libffi/lib"
+    "-L/usr/local/opt/ruby/lib"
+    )
+  local cppflags=(
+    "-I/usr/local/opt/readline/include"
+    "-I/usr/local/opt/openjdk@11/include"
+    "-I/usr/local/opt/curl/include"
+    "-I/usr/local/opt/libpq/include"
+    "-I/usr/local/opt/openssl@1.1/include"
+    "-I/usr/local/opt/libffi/include"
+    "-I/usr/local/opt/ruby/include"
+  )
 
-##-----------------------------------------##
-
-##------------Golang stuff-----------------##
-export GOPATH=$HOME/go
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/go/bin
-##-----------------------------------------##
-
-
-##---------- Powerline go stuff -----------## 
-function powerline_precmd() {
-    PS1="$(powerline-go -error $? -shell zsh -newline -modules venv,user,host,ssh,cwd,perms,git,jobs,exit,kube -shorten-gke-names)"
+  export LDFLAGS="${ldflags[*]}"
+  export CPPFLAGS="${cppflags[*]}"
 }
+setup_compiler_flags
+##------------------------------------------##
 
-function install_powerline_precmd() {
-  for s in "${precmd_functions[@]}"; do
-    if [ "$s" = "powerline_precmd" ]; then
-      return
-    fi
-  done
-  precmd_functions+=(powerline_precmd)
-}
-
-if [ "$TERM" != "linux" ]; then
-    install_powerline_precmd
-fi
-##-----------------------------------------##
+##------------ PATH CONFIG -----------------##
+export PATH="/usr/local/opt/gnu-getopt/bin:$PATH" # gnu-getopt
+export PATH="/usr/local/opt/unzip/bin:$PATH" # unzip
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH" # brew openssl
+export PATH="/usr/local/opt/openjdk@11/bin:$PATH" # java11
+export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH" # gnu-grep
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH" # gnu-sed
+export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH" # gnu-tar
+export PATH="/usr/local/opt/curl/bin:$PATH" # brew curl
+export PATH="/usr/local/opt/libpq/bin:$PATH" # lib-pq (psql)
+export PATH="/usr/local/opt/yq@3/bin:$PATH" # yq
+export PATH="/Applications/SnowSQL.app/Contents/MacOS:$PATH" # snowsql
+export PATH="$PATH:$HOME/.bin" # custom executables
+export PATH="$PATH:$HOME/.local/bin" # moar custom executables
+##------------------------------------------##
 
 
 ##----------------Aliases------------------##
-# gpg/ssh stuff
-alias restart_gpg_agent='gpgconf --kill gpg-agent; killall -9 gpg-agent ; gpgconf --launch gpg-agent'
-
 # basic shell stuff
-alias ls='ls --color=auto'
-alias l='ls -lah'
-
+alias ls='ls -G'
+alias l='ls -lAh'
 # kube stuff
 alias ku='kubectl'
 alias kug='kubectl get'
-
-# neovim
-alias vim='nvim'
-alias vi='nvim'
-
 # kubectx
 alias kctx='kubectx'
 alias kns='kubens'
+# ssh
+alias ssh='TERM=linux ssh'
 ##-----------------------------------------##
-
-
-##-------------Setup gpg-agent-------------## 
-GPG_TTY=$(tty)
-export GPG_TTY
-
-if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-    SSH_AUTH_SOCK=$(gpgconf --list-dirs | grep agent-socket | awk -F ':' '{ print $2".ssh" }')
-    export SSH_AUTH_SOCK
-fi
-gpgconf --launch gpg-agent
-##-----------------------------------------##
-
-
-##---------------GLCOUD stuff--------------##
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/ianlofgren/google-cloud-sdk/path.zsh.inc' ]; then source '/home/ianlofgren/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/ianlofgren/google-cloud-sdk/completion.zsh.inc' ]; then source '/home/ianlofgren/google-cloud-sdk/completion.zsh.inc'; fi
-###-----------------------------------------##
-
 
 ##----------Shared History-----------------##
 
@@ -82,8 +62,8 @@ if [ -z "$HISTFILE" ]; then
     HISTFILE=$HOME/.zsh_history
 fi
 
-HISTSIZE=10000
-SAVEHIST=10000
+export HISTSIZE=10000
+export SAVEHIST=10000
 
 # Show history
 case $HIST_STAMPS in
@@ -103,28 +83,65 @@ setopt inc_append_history
 setopt share_history # share command history data
 ##-----------------------------------------##
 
-##----------------kubectx------------------##
-ln -sf $HOME/.kubectx/kubectx $HOME/.bin/
-ln -sf $HOME/.kubectx/kubens $HOME/.bin/
-##-----------------------------------------##
+##-------------Setup gpg-agent-------------## 
 
-##----------------nvm config---------------##
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-##-----------------------------------------##
+# We only want to run gpg-agent on our local workstation. We accomplish that by trying to
+# detect if this shell was spawned from ssh or not. If the SSH_CLIENT env var is set, then
+# this is probably a remote login and we don't want to run gpg-agent.
 
-##----------------- FZF -------------------##
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-##-----------------------------------------##
+if [[ -z "$SSH_CLIENT" ]]; then
+  # gpg >= 2.1, use gpgconf
+  gpgconf --launch gpg-agent
+  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+    export SSH_AUTH_SOCK
+  fi
 
-##--------------- PYENV -------------------##
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
+  GPG_TTY=$(tty)
+  export GPG_TTY
+  
+  alias restart_gpg_agent="gpgconf --kill gpg-agent; killall -9 gpg-agent ; gpgconf --launch gpg-agent"
 fi
 ##-----------------------------------------##
 
+##------------Golang stuff-----------------##
+export GOPATH=$HOME/go
+export PATH=$PATH:$HOME/go/bin
+##-----------------------------------------##
 
+##----------------- FZF -------------------##
+[ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
+##-----------------------------------------##
 
+##--------------- PYENV -------------------##
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+##-----------------------------------------##
+
+##------------ POETRY CONFIG --------------##
+export POETRY_VIRTUALENVS_IN_PROJECT=true
+export PATH="$HOME/.poetry/bin:$PATH"
+##-----------------------------------------##
+
+##---------- Powerline go stuff -----------## 
+function powerline_precmd () {
+    PS1="$(powerline-go -error $? -shell zsh -newline -modules venv,user,host,ssh,cwd,perms,git,jobs,exit,kube -shorten-gke-names)"
+}
+
+function install_powerline_precmd () {
+  for s in "${precmd_functions[@]}"; do
+    if [ "$s" = "powerline_precmd" ]; then
+      return
+    fi
+  done
+  precmd_functions+=(powerline_precmd)
+}
+
+if [ "$TERM" != "linux" ]; then
+    install_powerline_precmd
+fi
+##-----------------------------------------##
+
+#------------- SETUP COMPLETIONS -----------##
+autoload -Uz compinit && compinit
+##------------------------------------------##

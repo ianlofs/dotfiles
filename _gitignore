@@ -1,7 +1,9 @@
-
 # editor stuff
 *.swp
 .vscode
+
+# project specific config
+.env
 
 # gpg stuff
 # only want to track certain files in 
