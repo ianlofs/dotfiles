@@ -29,8 +29,8 @@
 [push]
     default = matching
 [core]
-	excludesfile = /Users/dator/.gitignore
-	editor = /usr/local/bin/nvim
+	excludesfile = ~/.gitignore
+	editor = /usr/local/bin/vim
 [commit]
 	gpgSign = true
 [init]

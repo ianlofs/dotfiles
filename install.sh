@@ -10,7 +10,7 @@ PACKAGES=(
     gnu-sed
     gnu-tar
     base64
-    gnu-zsh
+    zsh
     gnu-getopt
     curl
     fzf
@@ -60,7 +60,7 @@ function install_packages () {
 
 function install_applications () {
     echo "Installing homebrew applications..."
-    brew update && brew install --cask "${CASKS[@]}"
+    brew update && brew reinstall --cask "${CASKS[@]}"
     echo "Done installing homebrew applications."   
 }
 
@@ -102,6 +102,11 @@ function main () {
     install_applications
     setup_shell
     setup_python
+
+    # now clone dotfiles repo and
+    # setup all the .dotfiles
+    git clone https://github.com/ianlofs/dotfiles.git "$HOME/.dotfiles"
+    cd .dotfiles
     setup_dotfiles
 }
 
