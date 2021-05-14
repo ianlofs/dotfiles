@@ -17,7 +17,6 @@ PACKAGES=(
     git
     macvim
     readline
-    gnupg
     unzip
     gzip
     libpq
@@ -26,6 +25,9 @@ PACKAGES=(
     helm
     kubectx
     tig
+    jq
+    minikube
+    terraform
 )
 
 CASKS=(
@@ -38,6 +40,8 @@ CASKS=(
     firefox
     gpg-suite
     snowflake-snowsql
+    docker
+    sizeup
 )
 
 function install_prereqs () {
@@ -52,7 +56,7 @@ function install_prereqs () {
 
 function install_packages () {
     echo "Installing homebrew packages..."
-    brew update && brew reinstall "${PACKAGES[@]}"
+    brew update && brew install "${PACKAGES[@]}"
     
     /usr/local/opt/fzf/install --key-bindings --completion --no-update-rc
     echo "Done install homebrew packages."   
@@ -60,7 +64,10 @@ function install_packages () {
 
 function install_applications () {
     echo "Installing homebrew applications..."
-    brew update && brew reinstall --cask "${CASKS[@]}"
+    brew tap homebrew/cask-drivers \
+      && brew update \
+      && brew install --cask "${CASKS[@]}" \
+      && brew install --cask yubico-yubikey-manager
     echo "Done installing homebrew applications."   
 }
 
