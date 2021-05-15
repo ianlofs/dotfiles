@@ -1,0 +1,12 @@
+{
+    "workbench.colorTheme": "Monokai Pro (Filter Machine)",
+    "workbench.iconTheme": "Monokai Pro (Filter Machine) Icons",
+    "editor.formatOnSave": true,
+    "editor.fontSize": 12,
+    "window.nativeFullScreen": false,
+    "window.zoomLevel": 1,
+    "terminal.integrated.fontFamily": "Roboto Mono for Powerline",
+    "terminal.integrated.fontSize": 12,
+    "terminal.external.osxExec": "kitty.app",
+    "terminal.integrated.automationShell.osx": "/usr/local/bin/zsh",
+}

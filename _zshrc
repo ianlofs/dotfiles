@@ -7,6 +7,7 @@ function setup_compiler_flags () {
     "-L/usr/local/opt/openssl@1.1/lib"
     "-L/usr/local/opt/libffi/lib"
     "-L/usr/local/opt/ruby/lib"
+    "-L/usr/local/opt/zlib/lib"
     )
   local cppflags=(
     "-I/usr/local/opt/readline/include"
@@ -16,6 +17,7 @@ function setup_compiler_flags () {
     "-I/usr/local/opt/openssl@1.1/include"
     "-I/usr/local/opt/libffi/include"
     "-I/usr/local/opt/ruby/include"
+    "-I/usr/local/opt/zlib/include"
   )
 
   export LDFLAGS="${ldflags[*]}"
@@ -115,7 +117,6 @@ export PATH=$PATH:$HOME/go/bin
 
 ##--------------- PYENV -------------------##
 eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 ##-----------------------------------------##
 
 ##------------ POETRY CONFIG --------------##

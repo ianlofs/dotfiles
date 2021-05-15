@@ -28,6 +28,8 @@ PACKAGES=(
     jq
     minikube
     terraform
+    zlib
+    awscli
 )
 
 CASKS=(
@@ -42,6 +44,14 @@ CASKS=(
     snowflake-snowsql
     docker
     sizeup
+    istat-menus
+)
+
+VSCODE_EXTENTIONS = (
+    monokai.theme-monokai-pro-vscode
+    ms-python.python
+    ms-python.vscode-pylance
+    ms-toolsai.jupyter
 )
 
 function install_prereqs () {
@@ -59,7 +69,13 @@ function install_packages () {
     brew update && brew install "${PACKAGES[@]}"
     
     /usr/local/opt/fzf/install --key-bindings --completion --no-update-rc
-    echo "Done install homebrew packages."   
+    echo "Done install homebrew packages."
+
+    echo "Installing VS Code Extentions..."
+    for ext in ${VSCODE_EXTENTIONS[@]}; do
+        code --force --install-extension "$ext"
+    done
+    echo "Done installing VS Code Extentions"
 }
 
 function install_applications () {
@@ -74,7 +90,9 @@ function install_applications () {
 function setup_shell () {
     echo "Setting up powerline-go ..."
     go get -u github.com/justjanne/powerline-go
-    curl https://raw.githubusercontent.com/powerline/fonts/master/install.sh | bash
+    git clone https://github.com/powerline/fonts.git "$HOME/fonts"
+    "$HOME/fonts/install.sh"
+    rm -r "$HOME/fonts/install.sh"
     echo "Done setting up powerline-go."
 }
 
@@ -86,8 +104,9 @@ function setup_python () {
 
 function setup_dotfiles () {
     # setup homedir dotfiles
-    for i in _*; do
-        source="${PWD}/$i"
+    git clone https://github.com/ianlofs/dotfiles.git "$HOME/.dotfiles"
+    for i in .dotfiles/_*; do
+        source="${HOME}/.dotfiles/$i"
         target="${HOME}/${i/_/.}"
 
         # everything else gets symlinked into home dir
@@ -100,7 +119,23 @@ function setup_dotfiles () {
     done
 
     # kitty terminal conf
-    ln -s "${PWD}/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+    ln -s "${HOME}/.dotfiles/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+
+    # vs code editor conf
+    ln -s "$HOME/.dotfiles/vscode_settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
+
+    local exten
+}
+
+function setup_prodtools () {
+    git clone git@github.com:circleci/prod-tools.git .prod-tools
+    ln -s "$HOME/.prod-tools/bin/prod-tools" "$HOME/.bin/prod"
+}
+
+function setup_dirs () {
+    mkdir "$HOME/.bin"
+    mkdir "$HOME/circleci"
+    mkdir "$HOME/personal"
 }
 
 function main () {
@@ -110,11 +145,9 @@ function main () {
     setup_shell
     setup_python
 
-    # now clone dotfiles repo and
-    # setup all the .dotfiles
-    git clone https://github.com/ianlofs/dotfiles.git "$HOME/.dotfiles"
-    cd .dotfiles
+    setup_dirs
     setup_dotfiles
+    setup_prodtools
 }
 
 main
