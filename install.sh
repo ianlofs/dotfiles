@@ -124,7 +124,6 @@ function setup_dotfiles () {
     # vs code editor conf
     ln -s "$HOME/.dotfiles/vscode_settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
 
-    local exten
 }
 
 function setup_prodtools () {

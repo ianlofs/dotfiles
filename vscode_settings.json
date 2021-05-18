@@ -9,4 +9,12 @@
     "terminal.integrated.fontSize": 12,
     "terminal.external.osxExec": "kitty.app",
     "terminal.integrated.automationShell.osx": "/usr/local/bin/zsh",
+    "workbench.editorAssociations": [
+        {
+            "viewType": "jupyter.notebook.ipynb",
+            "filenamePattern": "*.ipynb"
+        }
+    ],
+    "workbench.startupEditor": "none",
+    "explorer.confirmDelete": false
 }
