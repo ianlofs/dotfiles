@@ -1,7 +1,6 @@
 [user]
     name = Ian Lofgren
     email = ian@ianlofgren.com
-    signingKey = 66A39B1D4CD79DE6
 [color]
     # Use colors in Git commands that are capable of colored output when outputting to the terminal
     ui = auto
@@ -31,6 +30,8 @@
 [core]
 	excludesfile = ~/.gitignore
 	editor = /usr/local/bin/vim
+[gpg]
+	program = gpg
 [commit]
 	gpgSign = true
 [init]

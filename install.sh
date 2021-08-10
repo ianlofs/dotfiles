@@ -30,6 +30,7 @@ PACKAGES=(
     terraform
     zlib
     awscli
+    jpeg
 )
 
 CASKS=(
@@ -67,7 +68,7 @@ function install_prereqs () {
 function install_packages () {
     echo "Installing homebrew packages..."
     brew update && brew install "${PACKAGES[@]}"
-    
+
     /usr/local/opt/fzf/install --key-bindings --completion --no-update-rc
     echo "Done install homebrew packages."
 
@@ -84,7 +85,7 @@ function install_applications () {
       && brew update \
       && brew install --cask "${CASKS[@]}" \
       && brew install --cask yubico-yubikey-manager
-    echo "Done installing homebrew applications."   
+    echo "Done installing homebrew applications."
 }
 
 function setup_shell () {

@@ -27,6 +27,7 @@ setup_compiler_flags
 ##------------------------------------------##
 
 ##------------ PATH CONFIG -----------------##
+export PATH="/usr/local/opt/openjdk@8/bin:$PATH"
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH" # gnu-getopt
 export PATH="/usr/local/opt/unzip/bin:$PATH" # unzip
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH" # brew openssl
@@ -85,7 +86,7 @@ setopt inc_append_history
 setopt share_history # share command history data
 ##-----------------------------------------##
 
-##-------------Setup gpg-agent-------------## 
+##-------------Setup gpg-agent-------------##
 
 # We only want to run gpg-agent on our local workstation. We accomplish that by trying to
 # detect if this shell was spawned from ssh or not. If the SSH_CLIENT env var is set, then
@@ -101,7 +102,7 @@ if [[ -z "$SSH_CLIENT" ]]; then
 
   GPG_TTY=$(tty)
   export GPG_TTY
-  
+
   alias restart_gpg_agent="gpgconf --kill gpg-agent; killall -9 gpg-agent ; gpgconf --launch gpg-agent"
 fi
 ##-----------------------------------------##
@@ -124,7 +125,7 @@ export POETRY_VIRTUALENVS_IN_PROJECT=true
 export PATH="$HOME/.poetry/bin:$PATH"
 ##-----------------------------------------##
 
-##---------- Powerline go stuff -----------## 
+##---------- Powerline go stuff -----------##
 function powerline_precmd () {
     PS1="$(powerline-go -error $? -shell zsh -newline -modules venv,user,host,ssh,cwd,perms,git,jobs,exit,kube -shorten-gke-names)"
 }
