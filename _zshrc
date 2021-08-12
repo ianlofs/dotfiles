@@ -1,23 +1,25 @@
+BREW_PREFIX="$(brew --prefix)"
+
 ##------------ COMPILER FLAGS --------------##
 function setup_compiler_flags () {
   local ldflags=(
-    "-L/usr/local/opt/readline/lib"
-    "-L/usr/local/opt/curl/lib"
-    "-L/usr/local/opt/libpq/lib"
-    "-L/usr/local/opt/openssl@1.1/lib"
-    "-L/usr/local/opt/libffi/lib"
-    "-L/usr/local/opt/ruby/lib"
-    "-L/usr/local/opt/zlib/lib"
+    "-L$BREW_PREFIX/opt/readline/lib"
+    "-L$BREW_PREFIX/opt/curl/lib"
+    "-L$BREW_PREFIX/opt/libpq/lib"
+    "-L$BREW_PREFIX/opt/openssl@1.1/lib"
+    "-L$BREW_PREFIX/opt/libffi/lib"
+    "-L$BREW_PREFIX/opt/ruby/lib"
+    "-L$BREW_PREFIX/opt/zlib/lib"
     )
   local cppflags=(
-    "-I/usr/local/opt/readline/include"
-    "-I/usr/local/opt/openjdk@11/include"
-    "-I/usr/local/opt/curl/include"
-    "-I/usr/local/opt/libpq/include"
-    "-I/usr/local/opt/openssl@1.1/include"
-    "-I/usr/local/opt/libffi/include"
-    "-I/usr/local/opt/ruby/include"
-    "-I/usr/local/opt/zlib/include"
+    "-I$BREW_PREFIX/opt/readline/include"
+    "-I$BREW_PREFIX/opt/openjdk@11/include"
+    "-I$BREW_PREFIX/opt/curl/include"
+    "-I$BREW_PREFIX/opt/libpq/include"
+    "-I$BREW_PREFIX/opt/openssl@1.1/include"
+    "-I$BREW_PREFIX/opt/libffi/include"
+    "-I$BREW_PREFIX/opt/ruby/include"
+    "-I$BREW_PREFIX/opt/zlib/include"
   )
 
   export LDFLAGS="${ldflags[*]}"
@@ -27,17 +29,14 @@ setup_compiler_flags
 ##------------------------------------------##
 
 ##------------ PATH CONFIG -----------------##
-export PATH="/usr/local/opt/openjdk@8/bin:$PATH"
-export PATH="/usr/local/opt/gnu-getopt/bin:$PATH" # gnu-getopt
-export PATH="/usr/local/opt/unzip/bin:$PATH" # unzip
-export PATH="/usr/local/opt/openssl@1.1/bin:$PATH" # brew openssl
-export PATH="/usr/local/opt/openjdk@11/bin:$PATH" # java11
-export PATH="/usr/local/opt/grep/libexec/gnubin:$PATH" # gnu-grep
-export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH" # gnu-sed
-export PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH" # gnu-tar
-export PATH="/usr/local/opt/curl/bin:$PATH" # brew curl
-export PATH="/usr/local/opt/libpq/bin:$PATH" # lib-pq (psql)
-export PATH="/usr/local/opt/yq@3/bin:$PATH" # yq
+export PATH="$BREW_PREFIX/opt/gnu-getopt/bin:$PATH" # gnu-getopt
+export PATH="$BREW_PREFIX/opt/unzip/bin:$PATH" # unzip
+export PATH="$BREW_PREFIX/opt/grep/libexec/gnubin:$PATH" # gnu-grep
+export PATH="$BREW_PREFIX/opt/gnu-sed/libexec/gnubin:$PATH" # gnu-sed
+export PATH="$BREW_PREFIX/opt/gnu-tar/libexec/gnubin:$PATH" # gnu-tar
+export PATH="$BREW_PREFIX/opt/curl/bin:$PATH" # brew curl
+export PATH="$BREW_PREFIX/opt/libpq/bin:$PATH" # lib-pq (psql)
+export PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="/Applications/SnowSQL.app/Contents/MacOS:$PATH" # snowsql
 export PATH="$PATH:$HOME/.bin" # custom executables
 export PATH="$PATH:$HOME/.local/bin" # moar custom executables
@@ -49,8 +48,8 @@ export PATH="$PATH:$HOME/.local/bin" # moar custom executables
 alias ls='ls -G'
 alias l='ls -lAh'
 # kube stuff
-alias ku='kubectl'
-alias kug='kubectl get'
+alias kc='kubectl'
+alias kcs='kubectl get'
 # kubectx
 alias kctx='kubectx'
 alias kns='kubens'
@@ -116,11 +115,6 @@ export PATH=$PATH:$HOME/go/bin
 [ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
 ##-----------------------------------------##
 
-##--------------- PYENV -------------------##
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-##-----------------------------------------##
-
 ##------------ POETRY CONFIG --------------##
 export POETRY_VIRTUALENVS_IN_PROJECT=true
 export PATH="$HOME/.poetry/bin:$PATH"
@@ -145,6 +139,23 @@ if [ "$TERM" != "linux" ]; then
 fi
 ##-----------------------------------------##
 
+#--------- SETUP ZSH AUTOSUGGESTIONS -------##
+source $BREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#ff00ff,bg=cyan,bold,underline'
+export ZSH_AUTOSUGGEST_STRATEGY=(completion history)
+bindkey '^I' autosuggest-accept
+##------------------------------------------##
+
+##-----------------asdf---------------------##
+. $BREW_PREFIX/opt/asdf/libexec/asdf.sh
+##------------------------------------------##
+
 #------------- SETUP COMPLETIONS -----------##
-autoload -Uz compinit && compinit
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  autoload -Uz compinit
+  compinit
+fi
 ##------------------------------------------##

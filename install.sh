@@ -2,65 +2,77 @@
 set -e -ou pipefail
 
 PACKAGES=(
-    go
-    pyenv
-    grep
-    gnu-sed
-    gnu-tar
+    asdf
+    awscli
     base64
-    zsh
-    gnu-getopt
+    bat
+    cookiecutter
+    coreutils
     curl
+    diff-so-fancy
     fzf
     git
-    macvim
-    readline
-    unzip
+    go
+    go-task
+    golangci-lint
+    gnu-getopt
+    gnu-sed
+    gnu-tar
+    grep
     gzip
-    libpq
-    openssl
-    yq@3
     helm
-    kubectx
-    tig
     jq
-    minikube
-    terraform
-    zlib
-    awscli
-    jpeg
+    kind
+    kubectx
+    kubernetes-cli
+    libffi
+    libpq
+    libyaml
+    macvim
+    openssl
+    readline
     telnet
-    pipx
+    terraform
+    tig
+    unzip
+    vault
+    yq
+    zlib
+    zsh
+    zsh-autosuggestions
 )
-
 
 CASKS=(
-    kitty
-    zoom
-    slack
-    spotify
-    visual-studio-code
     1password
+    1password-cli
+    docker
     firefox
     gpg-suite
-    snowflake-snowsql
-    docker
-    sizeup
-    istat-menus
     intel-power-gadget
+    kitty
+    sizeup
+    slack
+    snowflake-snowsql
+    spotify
+    stats
+    visual-studio-code
     yubico-yubikey-manager
+    zoom
 )
 
-VSCODE_EXTENTIONS = (
+VSCODE_EXTENTIONS=(
+    bierner.markdown-mermaid
+    CircleCI.circleci
+    dorzey.vscode-sqlfluff
+    eamodio.gitlens
+    golang.go
+    hashicorp.terraform
+    innoverio.vscode-dbt-power-user
     monokai.theme-monokai-pro-vscode
+    ms-python.isort
     ms-python.python
     ms-python.vscode-pylance
-    ms-toolsai.jupyter
-    eamodio.gitlens
-)
-
-PIPX_PKGS = (
-    cookiecutter
+    njpwerner.autodocstring
 )
 
 function install_prereqs () {
@@ -86,34 +98,33 @@ function install_packages () {
     done
     echo "Done installing VS Code Extentions"
 
-    echo "Installing pipx packaging..."
-    for pkg in ${PIPX_PKGS[@]}; do
-        pipx install "$pkg"
-    done
-    echo "Done installing pipx packages"
+    echo "Install asdf plugins..."
+    . $(brew --prefix)/opt/asdf/libexec/asdf.sh
+    asdf plugin add python
+    asdf plugin add terraform
+    echo "Done installing asdf plugins."
 }
 
 function install_applications () {
     echo "Installing homebrew applications..."
     brew tap homebrew/cask-drivers \
       && brew update \
-      && brew install --cask "${CASKS[@]}" \
-      && brew install --cask yubico-yubikey-manager
+      && brew install --cask "${CASKS[@]}"
     echo "Done installing homebrew applications."
 }
 
 function setup_shell () {
     echo "Setting up powerline-go ..."
-    go get -u github.com/justjanne/powerline-go
-    git clone https://github.com/powerline/fonts.git "$HOME/fonts"
+    go install github.com/justjanne/powerline-go@latest
+    git clone https://github.com/powerline/fonts.git --depth=1 "$HOME/fonts"
     "$HOME/fonts/install.sh"
-    rm -r "$HOME/fonts/install.sh"
+    rm -r "$HOME/fonts"
     echo "Done setting up powerline-go."
 }
 
 function setup_python () {
     echo "Setting up poetry ..."
-    curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+    curl -sSL https://install.python-poetry.org | python -
     echo "Done setting up poetry."
 }
 
@@ -138,12 +149,6 @@ function setup_dotfiles () {
 
     # vs code editor conf
     ln -s "$HOME/.dotfiles/vscode_settings.json" "$HOME/Library/Application Support/Code/User/settings.json"
-
-}
-
-function setup_prodtools () {
-    git clone git@github.com:circleci/prod-tools.git .prod-tools
-    ln -s "$HOME/.prod-tools/bin/prod-tools" "$HOME/.bin/prod-tools"
 }
 
 function setup_dirs () {
@@ -156,9 +161,9 @@ function main () {
     install_prereqs
     install_packages
     install_applications
+
     setup_shell
     setup_python
-
     setup_dirs
     setup_dotfiles
     setup_prodtools
