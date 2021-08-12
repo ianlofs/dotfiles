@@ -9,12 +9,13 @@
     "terminal.integrated.fontSize": 12,
     "terminal.external.osxExec": "kitty.app",
     "terminal.integrated.automationShell.osx": "/usr/local/bin/zsh",
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
     "workbench.startupEditor": "none",
-    "explorer.confirmDelete": false
+    "explorer.confirmDelete": false,
+    "gitlens.codeLens.enabled": false,
+    "gitlens.defaultDateStyle": "absolute",
+    "gitlens.defaultDateFormat": "YYYY-MM-DD HH:MM:SSZ",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "sql.linter.executablePath": "/Users/dator/.local/bin/sqlfluff"
 }

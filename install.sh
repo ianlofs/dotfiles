@@ -3,9 +3,7 @@ set -e -ou pipefail
 
 PACKAGES=(
     go
-    python
     pyenv
-    cookiecutter
     grep
     gnu-sed
     gnu-tar
@@ -31,7 +29,10 @@ PACKAGES=(
     zlib
     awscli
     jpeg
+    telnet
+    pipx
 )
+
 
 CASKS=(
     kitty
@@ -46,6 +47,8 @@ CASKS=(
     docker
     sizeup
     istat-menus
+    intel-power-gadget
+    yubico-yubikey-manager
 )
 
 VSCODE_EXTENTIONS = (
@@ -53,6 +56,11 @@ VSCODE_EXTENTIONS = (
     ms-python.python
     ms-python.vscode-pylance
     ms-toolsai.jupyter
+    eamodio.gitlens
+)
+
+PIPX_PKGS = (
+    cookiecutter
 )
 
 function install_prereqs () {
@@ -77,6 +85,12 @@ function install_packages () {
         code --force --install-extension "$ext"
     done
     echo "Done installing VS Code Extentions"
+
+    echo "Installing pipx packaging..."
+    for pkg in ${PIPX_PKGS[@]}; do
+        pipx install "$pkg"
+    done
+    echo "Done installing pipx packages"
 }
 
 function install_applications () {
@@ -106,7 +120,7 @@ function setup_python () {
 function setup_dotfiles () {
     # setup homedir dotfiles
     git clone https://github.com/ianlofs/dotfiles.git "$HOME/.dotfiles"
-    for i in .dotfiles/_*; do
+    for i in "$HOME/.dotfiles/_*"; do
         source="${HOME}/.dotfiles/$i"
         target="${HOME}/${i/_/.}"
 
@@ -129,7 +143,7 @@ function setup_dotfiles () {
 
 function setup_prodtools () {
     git clone git@github.com:circleci/prod-tools.git .prod-tools
-    ln -s "$HOME/.prod-tools/bin/prod-tools" "$HOME/.bin/prod"
+    ln -s "$HOME/.prod-tools/bin/prod-tools" "$HOME/.bin/prod-tools"
 }
 
 function setup_dirs () {
