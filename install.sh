@@ -32,7 +32,6 @@ PACKAGES=(
     openssl
     readline
     telnet
-    terraform
     tig
     unzip
     vault
@@ -50,13 +49,13 @@ CASKS=(
     gpg-suite
     intel-power-gadget
     kitty
+    obsidian
     sizeup
     slack
     snowflake-snowsql
     spotify
     stats
     visual-studio-code
-    yubico-yubikey-manager
     zoom
 )
 

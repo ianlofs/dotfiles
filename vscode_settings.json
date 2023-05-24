@@ -1,6 +1,6 @@
 {
-    "workbench.colorTheme": "Monokai Pro (Filter Machine)",
-    "workbench.iconTheme": "Monokai Pro (Filter Machine) Icons",
+    "workbench.colorTheme": "Monokai Pro",
+    "workbench.iconTheme": "Monokai Pro Icons",
     "editor.fontSize": 12,
     "window.nativeFullScreen": false,
     "terminal.integrated.fontFamily": "Roboto Mono for Powerline",
@@ -15,5 +15,9 @@
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
     "files.trimFinalNewlines": true,
-    "window.zoomLevel": 1
+    "window.zoomLevel": 1,
+    "extensions.ignoreRecommendations": true,
+    "[python]": {
+        "editor.formatOnType": true
+    }
 }

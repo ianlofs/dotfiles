@@ -40,6 +40,7 @@ export PATH="$BREW_PREFIX/opt/coreutils/libexec/gnubin:$PATH"
 export PATH="/Applications/SnowSQL.app/Contents/MacOS:$PATH" # snowsql
 export PATH="$PATH:$HOME/.bin" # custom executables
 export PATH="$PATH:$HOME/.local/bin" # moar custom executables
+export PATH="$PATH:$HOME/.docker/bin" # docker stuff
 ##------------------------------------------##
 
 
@@ -159,3 +160,4 @@ then
   compinit
 fi
 ##------------------------------------------##
+
