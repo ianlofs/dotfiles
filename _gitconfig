@@ -29,7 +29,7 @@
     default = matching
 [core]
 	excludesfile = ~/.gitignore
-	editor = /usr/local/bin/vim
+	editor = /opt/homebrew/bin/vim
 	pager = diff-so-fancy | less --tabs=4 -RFX
 [gpg]
 	program = gpg

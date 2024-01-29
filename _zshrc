@@ -20,8 +20,8 @@ function setup_compiler_flags () {
     "-I$BREW_PREFIX/opt/libffi/include"
     "-I$BREW_PREFIX/opt/ruby/include"
     "-I$BREW_PREFIX/opt/zlib/include"
+    "-I$BREW_PREFIX/opt/openjdk@11/include"
   )
-
   export LDFLAGS="${ldflags[*]}"
   export CPPFLAGS="${cppflags[*]}"
 }
@@ -41,6 +41,7 @@ export PATH="/Applications/SnowSQL.app/Contents/MacOS:$PATH" # snowsql
 export PATH="$PATH:$HOME/.bin" # custom executables
 export PATH="$PATH:$HOME/.local/bin" # moar custom executables
 export PATH="$PATH:$HOME/.docker/bin" # docker stuff
+export PATH="$BREW_PREFIX/opt/openjdk@11/bin:$PATH"[
 ##------------------------------------------##
 
 
@@ -123,7 +124,7 @@ export PATH="$HOME/.poetry/bin:$PATH"
 
 ##---------- Powerline go stuff -----------##
 function powerline_precmd () {
-    PS1="$(powerline-go -error $? -shell zsh -newline -modules venv,user,host,ssh,cwd,perms,git,jobs,exit,kube -shorten-gke-names)"
+    PS1="$(powerline-go -error $? -shell zsh -newline -modules venv,user,host,ssh,cwd,perms,git,jobs,exit)"
 }
 
 function install_powerline_precmd () {
@@ -160,4 +161,3 @@ then
   compinit
 fi
 ##------------------------------------------##
-
