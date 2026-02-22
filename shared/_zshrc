@@ -1,0 +1,61 @@
+##------------ PATH CONFIG -----------------##
+export PATH="$PATH:$HOME/.bin"
+export PATH="$PATH:$HOME/.local/bin"
+##------------------------------------------##
+
+
+##----------------Aliases------------------##
+alias l='ls -lAh'
+# kube stuff
+alias kc='kubectl'
+alias kcs='kubectl get'
+alias kctx='kubectx'
+alias kns='kubens'
+##-----------------------------------------##
+
+
+##----------Shared History-----------------##
+if [ -z "$HISTFILE" ]; then
+    HISTFILE=$HOME/.zsh_history
+fi
+
+export HISTSIZE=10000
+export SAVEHIST=10000
+
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt inc_append_history
+setopt share_history
+##-----------------------------------------##
+
+
+##-------------Setup gpg-agent-------------##
+
+# We only want to run gpg-agent on our local workstation. We accomplish that by
+# trying to detect if this shell was spawned from ssh or not. If the SSH_CLIENT
+# env var is set, then this is probably a remote login and we don't want to run
+# gpg-agent.
+
+if [[ -z "$SSH_CLIENT" ]]; then
+  gpgconf --launch gpg-agent
+  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+    export SSH_AUTH_SOCK
+  fi
+
+  GPG_TTY=$(tty)
+  export GPG_TTY
+
+  alias restart_gpg_agent="gpgconf --kill gpg-agent; killall -9 gpg-agent; gpgconf --launch gpg-agent"
+fi
+##-----------------------------------------##
+
+
+##------------Golang stuff-----------------##
+export GOPATH=$HOME/go
+export PATH=$PATH:$HOME/go/bin
+##-----------------------------------------##

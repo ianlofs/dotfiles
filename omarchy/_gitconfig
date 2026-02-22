@@ -2,8 +2,7 @@
     name = Ian Lofgren
     email = ian@ianlofgren.com
 [color]
-    # Use colors in Git commands that are capable of colored output when outputting to the terminal
-	ui = true
+    ui = true
 [color "branch"]
     current = red reverse
     local = red
@@ -28,29 +27,25 @@
 [push]
     default = matching
 [core]
-	excludesfile = ~/.gitignore
-	editor = /opt/homebrew/bin/vim
-	pager = diff-so-fancy | less --tabs=4 -RFX
-[gpg]
-	program = gpg
-[commit]
-	gpgSign = true
+    excludesfile = ~/.gitignore
+    editor = /usr/bin/nvim
+    pager = diff-so-fancy | less --tabs=4 -RFX
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [interactive]
-	diffFilter = diff-so-fancy --patch
+    diffFilter = diff-so-fancy --patch
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
 [color "diff"]
-	meta = 11
-	frag = magenta bold
-	func = 146 bold
-	commit = yellow bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+    meta = 11
+    frag = magenta bold
+    func = 146 bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
 [url "ssh://git@github.com/"]
-	insteadOf = https://github.com/
+    insteadOf = https://github.com/
